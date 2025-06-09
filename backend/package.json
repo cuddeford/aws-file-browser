@@ -1,0 +1,22 @@
+{
+  "name": "aws-file-browser-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node src/index.ts",
+    "dev": "nodemon --exec ts-node src/index.ts"
+  },
+  "author": "Lucio Cuddeford <cuddeford@me.com>",
+  "license": "UNLICENCED",
+  "description": "",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.825.0",
+    "fastify": "^5.3.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.29",
+    "nodemon": "^3.1.10",
+    "types": "file:../common/types"
+  }
+}
