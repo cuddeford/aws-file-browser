@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react'
-import { useNavigate, Link } from 'react-router'
+import { useNavigate, Link } from 'react-router-dom'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHomeLg } from '@fortawesome/free-solid-svg-icons'
