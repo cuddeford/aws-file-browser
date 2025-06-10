@@ -73,7 +73,13 @@ const KeyModal = () => {
                 <select
                     className='glass-effect'
                     value={region}
-                    onChange={e => setRegion(e.currentTarget.value)}
+                    onChange={e => {
+                        setRegion(e.currentTarget.value)
+
+                        if (keyId && secretKey) {
+                            setKeyModalOpen(false)
+                        }
+                    }}
                 >
                     {Object.entries(AWSRegions).map(([key, value]) => (
                         <option key={key} value={key}>
