@@ -98,7 +98,7 @@ a {
     border-radius: 10px;
     overflow: scroll hidden;
     width: calc(100% - 410px);
-    text-wrap-mode: nowrap;
+    text-wrap: nowrap;
     position: absolute;
 
     &.editing {
@@ -244,7 +244,7 @@ table {
     }
 
     .file-name {
-        text-wrap-style: nowrap;
+        text-wrap: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         font-size: 0.9em;
