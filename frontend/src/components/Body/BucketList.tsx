@@ -5,6 +5,7 @@ import type { DataBucket, FileMode } from 'types'
 import { getBuckets } from '../../lib/api'
 
 import { useGlobalFetchingContext } from '../../context/globalFetchingContext'
+import { useRegionContext } from '../../context/regionContext'
 
 import { useCustomEventHandler } from '../../hooks'
 
@@ -22,8 +23,10 @@ const BucketList = (props: BucketListProps) => {
 
     const { setIsGlobalFetching } = useGlobalFetchingContext()
 
+    const { region } = useRegionContext()
+
     const { data, isFetching, isLoading, error, refetch } = useQuery({
-        queryKey: ['buckets', window.localStorage.getItem('aws-file-browser-region')],
+        queryKey: ['buckets', region],
         enabled: render,
         queryFn: getBuckets,
         retry: false,
