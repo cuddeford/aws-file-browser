@@ -41,6 +41,7 @@ $ npm run dev
 
 ## Room for improvement
 - Add image previews when in icons mode
+- Sort files in table mode by each column
 - View browser compatible files directly without having to download
 - Drag and drop to upload new files
 - Create folders and buckets
