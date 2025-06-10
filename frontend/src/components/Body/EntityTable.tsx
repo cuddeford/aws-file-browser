@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFolder, faFileAudio, faFileVideo, faFileImage, faFile, faBucket } from '@fortawesome/free-solid-svg-icons'
 import prettyBytes from 'pretty-bytes'
+import { formatDistanceToNow } from 'date-fns'
 
 import getFileType from '../../lib/getFileType'
 import downloadToDisk from '../../lib/downloadToDisk'
@@ -51,9 +52,16 @@ const EntityTable = (props: {
                     }[fileInfo.type] || faFile
 
                     const sizeReadable = size ? prettyBytes(size) : '-'
-                    const date = isBucket
+
+                    const dateFull = isBucket
                         ? new Date(createdAt).toLocaleString()
                         : updatedAt ? new Date(updatedAt).toLocaleString() : '-'
+
+                    const dateFormatted = createdAt || updatedAt
+                        ? formatDistanceToNow(isBucket
+                            ? new Date(createdAt)
+                            : new Date(updatedAt), { addSuffix: true })
+                        : '-'
 
                     const handleClick = async (event: React.MouseEvent) => downloadToDisk({
                         bucketName,
@@ -65,8 +73,8 @@ const EntityTable = (props: {
                     })
 
                     // Trick to make the whole table row clickable while preserving the <a> behavior
-                    const LinkElement = ({ children }: { children: React.ReactNode }) => (
-                        <Link to={path} onClick={handleClick}>
+                    const LinkElement = ({ children, ...attrs }: { children: React.ReactNode, attrs?: React.HTMLAttributes<HTMLAnchorElement> }) => (
+                        <Link to={path} onClick={handleClick} {...attrs}>
                             {children}
                         </Link>
                     )
@@ -80,7 +88,9 @@ const EntityTable = (props: {
                             </td>
 
                             <td>
-                                <LinkElement>{date}</LinkElement>
+                                <LinkElement {...{ title: dateFull }}>
+                                    {dateFormatted}
+                                </LinkElement>
                             </td>
 
                             {isBucket
