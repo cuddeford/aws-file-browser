@@ -348,3 +348,10 @@ select {
         transform: scale(1);
     }
 }
+
+img {
+    max-width: 56px;
+    position: relative;
+    top: 6px;
+    max-height: 57px;
+}
