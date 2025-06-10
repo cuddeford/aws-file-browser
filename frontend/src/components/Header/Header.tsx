@@ -18,7 +18,6 @@ import { useSecretKeyContext } from '../../context/secretKeyContext'
 
 const HeaderButton = styled.button.attrs({ className: 'glass-effect' })<{ $enabled?: boolean }>`
     opacity: ${props => props.$enabled ? 1 : 0.5};
-    pointer-events: ${props => props.$enabled ? 'auto' : 'none'};
 `
 
 const Header = () => {
@@ -41,7 +40,7 @@ const Header = () => {
         <div className={`center glass-effect header ${headerFadeStyle}`}>
             <div id='left-btns'>
                 <HeaderButton
-                    onClick={() => document.startViewTransition(() => navigate(-1))}
+                    onClick={() => canGoBack && document.startViewTransition(() => navigate(-1))}
                     $enabled={canGoBack}
                 >
                     <FontAwesomeIcon
@@ -51,7 +50,7 @@ const Header = () => {
                 </HeaderButton>
 
                 <HeaderButton
-                    onClick={() => document.startViewTransition(() => navigate(+1))}
+                    onClick={() => canGoForward && document.startViewTransition(() => navigate(+1))}
                     $enabled={canGoForward}
                 >
                     <FontAwesomeIcon
@@ -66,7 +65,7 @@ const Header = () => {
                             window.dispatchEvent(new Event('force-refetch'))
                         }
                     }}
-                    $enabled={isGlobalFetching}
+                    $enabled={!isGlobalFetching}
                 >
                     <FontAwesomeIcon
                         icon={faArrowRotateRight}
