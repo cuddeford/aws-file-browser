@@ -6,6 +6,8 @@ import { getBuckets } from '../../lib/api'
 
 import { useGlobalFetchingContext } from '../../context/globalFetchingContext'
 
+import { useCustomEventHandler } from '../../hooks'
+
 import QueryState from './QueryState'
 import EntityTable from './EntityTable'
 import EntityIcons from './EntityIcons'
@@ -31,11 +33,7 @@ const BucketList = (props: BucketListProps) => {
         setIsGlobalFetching(isFetching)
     }, [isFetching])
 
-    useEffect(() => {
-        const handler = () => refetch()
-        window.addEventListener('force-refetch', handler)
-        return () => window.removeEventListener('force-refetch', handler)
-    }, [refetch])
+    useCustomEventHandler('force-refetch', refetch, [refetch])
 
     if (!render) {
         return null

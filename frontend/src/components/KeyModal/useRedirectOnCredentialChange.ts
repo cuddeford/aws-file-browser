@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 
+import { useEmitCustomEvent } from '../../hooks/useCustomEvent'
+
 interface Props {
     keyId: string
     secretKey: string
@@ -17,6 +19,8 @@ const useRedirectOnCredentialChange = (props: Props) => {
         setLastCredentials({ keyId, secretKey, region })
     }, [keyId, secretKey, region])
 
+    const emitForceRefetch = useEmitCustomEvent('force-refetch')
+
     useEffect(() => {
         const credentialsChanged = keyId !== lastCredentials.keyId
             || secretKey !== lastCredentials.secretKey
@@ -25,7 +29,7 @@ const useRedirectOnCredentialChange = (props: Props) => {
         if (credentialsChanged) {
             if (pathname === '/') {
                 // Refetch the react-query query
-                window.dispatchEvent(new Event('force-refetch'))
+                emitForceRefetch()
             } else {
                 // Navigate to root. react-query will refetch the query automatically
                 // when navigating like this

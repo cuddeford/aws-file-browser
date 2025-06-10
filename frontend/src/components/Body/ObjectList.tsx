@@ -5,6 +5,8 @@ import { useGlobalFetchingContext } from '../../context/globalFetchingContext'
 import type { FileMode } from 'types'
 import { getObjects } from '../../lib/api'
 
+import { useCustomEventHandler } from '../../hooks'
+
 import QueryState from './QueryState'
 import EntityTable from './EntityTable'
 import EntityIcons from './EntityIcons'
@@ -26,11 +28,7 @@ const ObjectList = ({ render, fileMode, bucketName, folders }: ObjectListProps) 
         retry: false,
     })
 
-    useEffect(() => {
-        const handler = () => refetch()
-        window.addEventListener('force-refetch', handler)
-        return () => window.removeEventListener('force-refetch', handler)
-    }, [refetch])
+    useCustomEventHandler('force-refetch', refetch, [refetch])
 
     useEffect(() => {
         setIsGlobalFetching(isFetching)

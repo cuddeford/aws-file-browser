@@ -9,7 +9,7 @@ import { useFileModeContext } from '../../context/fileModeContext'
 import { useKeyModalContext } from '../../context/keyModalContext'
 import { useGlobalFetchingContext } from '../../context/globalFetchingContext'
 
-import { useScrollBoundary, useVirtualHistory } from '../../hooks'
+import { useScrollBoundary, useVirtualHistory, useEmitCustomEvent } from '../../hooks'
 
 import BucketPath from './BucketPath'
 import { useKeyIdContext } from '../../context/keyIdContext'
@@ -35,6 +35,8 @@ const Header = () => {
     const missingCredentials = !keyId || !secretKey || !region
 
     const headerFadeStyle = scrollAtTop ? 'header-fade' : ''
+
+    const emitForceRefetch = useEmitCustomEvent('force-refetch')
 
     return (
         <div className={`center glass-effect header ${headerFadeStyle}`}>
@@ -62,7 +64,7 @@ const Header = () => {
                 <HeaderButton
                     onClick={() => {
                         if (!isGlobalFetching) {
-                            window.dispatchEvent(new Event('force-refetch'))
+                            emitForceRefetch()
                         }
                     }}
                     $enabled={!isGlobalFetching}
